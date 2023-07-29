@@ -1,0 +1,24 @@
+.login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &-form-wrap {
+    box-sizing: border-box;
+    width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+    background: #DCF8C4;
+  }
+  .title {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+  .switch-mode {
+    text-align: right;
+    .ant-btn-link {
+      padding: 0;
+    }
+  }
+}

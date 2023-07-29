@@ -1,0 +1,24 @@
+@import '@/index.scss';
+
+.layout {
+  height: 100vh;
+  display: flex;
+  &-aside {
+    flex: 0 0 auto;
+  }
+  &-main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    &-header {
+      flex: 0 0 $header-height;
+      padding: 0 $inset-padding;
+      box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    }
+    &-body {
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+@import '@/index.scss';
+
+.aside {
+  width: 240px;
+  height: 100%;
+  background: #001529;
+  transition: width 0.3s cubic-bezier(0.2, 0, 0, 1);
+  display: flex;
+  flex-direction: column;
+  $root: &;
+  &.collapsed {
+    width: 80px;
+    #{$root}-top>.brand {
+      opacity: 0;
+    }
+    #{$root}-bottom {
+      padding-left: 30px;
+    }
+  }
+  &-top {
+    flex: 0 0 $header-height;
+    color: rgba(255,255,255,.8);
+    line-height: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    .icon-sun {
+      font-size: 30px;
+      margin: 0 15px 0 24px;
+    }
+    .brand {
+      font-size: 20px;
+      font-weight: bold;
+      white-space: nowrap;
+      opacity: 1;
+      transition: opacity .3s;
+    }
+  }
+  &-middle {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+  &-bottom {
+    flex: 0 0 40px;
+    padding-left: 204px;
+    font-size: $ant-menu-item-font-size;
+    color: rgba(255,255,255,.65);
+    transition: all .3s;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      color: rgba(255,255,255);
+    }
+  }
+}
