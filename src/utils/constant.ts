@@ -13,3 +13,9 @@ export const UPLOAD_CONFIG = {
     accepts: ['video/mp4', 'video/mpeg', 'video/x-msvideo', 'video/webm', 'video/3gpp', 'video/x-m4v', 'video/quicktime']
   },
 }
+
+export enum ROLES {
+  none = 0,
+  farmer,
+  retailer
+}

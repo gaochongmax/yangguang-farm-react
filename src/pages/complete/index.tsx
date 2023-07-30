@@ -1,6 +1,8 @@
+import React from 'react'
 import ProfileForm from '@/components/profile-form'
 
-const AccountComplete: React.FC = () => {
+const Complete: React.FC = () => {
+  console.log('complete')
   return (
     <div>
       <ProfileForm></ProfileForm>
@@ -8,4 +10,4 @@ const AccountComplete: React.FC = () => {
   )
 }
 
-export default AccountComplete
+export default Complete
