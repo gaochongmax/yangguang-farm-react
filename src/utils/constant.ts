@@ -1,6 +1,7 @@
 export const REGEXP = {
   mobile: /^1\d{10}$/,
-  password: /^[a-zA-Z]\w{5,7}$/
+  password: /^[a-zA-Z]\w{5,7}$/,
+  wechat: /^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/
 }
 
 export const UPLOAD_CONFIG = {

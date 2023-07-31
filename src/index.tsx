@@ -31,11 +31,11 @@ const App: React.FC = () => {
   return (
     <>
       {loading ? <Loading /> : (
-        <React.StrictMode>
+        // <React.StrictMode>
           <Provider store={store}>
             <RouterGuard />
           </Provider>
-        </React.StrictMode>
+        // </React.StrictMode>
       )}
     </>
   )

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
+import { MobileOutlined, LockOutlined } from '@ant-design/icons'
 import { encrypt, REGEXP, http, ResException } from '@/utils'
 import './index.scss'
 
@@ -17,7 +18,7 @@ const Login: React.FC = () => {
     ],
     password: [
       { required: true, message: '请输入密码' },
-      { pattern: REGEXP.password, message: '以字母开头，仅包含字母、数字、下划线，长度6-8位' }
+      { pattern: REGEXP.password, message: '6-8位，以字母开头，可包含字母、数字、下划线' }
     ],
   }
 
@@ -33,7 +34,7 @@ const Login: React.FC = () => {
         password: encrypt(password)
       }, '注册登录中...')
       window.location.replace('/complete')
-    } catch (e) {}
+    } catch (e) { }
   }
 
   async function onLogin() {
@@ -57,10 +58,10 @@ const Login: React.FC = () => {
       <div className="login-form-wrap">
         <Form form={form}>
           <Form.Item name="mobile" rules={rules.mobile}>
-            <Input placeholder="手机号"/>
+            <Input placeholder="手机号" prefix={<MobileOutlined className="input-icon" />} />
           </Form.Item>
           <Form.Item name="password" rules={rules.password}>
-            <Input placeholder="密码"/>
+            <Input placeholder="密码" prefix={<LockOutlined className="input-icon" />} type="password" />
           </Form.Item>
           {isRegister &&
             <Form.Item name="confirm_password" rules={[
@@ -74,7 +75,7 @@ const Login: React.FC = () => {
                 }
               })
             ]}>
-              <Input placeholder="再次输入密码"/>
+              <Input placeholder="再次输入密码" prefix={<LockOutlined className="input-icon" />} type="password" />
             </Form.Item>
           }
         </Form>
