@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import type { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom'
+import Loading from '@/components/loading'
 
 /**
  * 扩展额外的路由信息
@@ -23,11 +24,13 @@ type AppRouteObject = AppIndexRouteObject | AppNonIndexRouteObject
  * @param path 文件所在目录路径  为了在import()里使用变量，约定：组件文件名都是index.tsx
  * @returns JSX.Element
  */
+const fullScreenPaths: string[] = ['layout', 'pages/login', 'pages/complete', 'pages/not-found']
 function lazyLoad(path: string): JSX.Element {
   const Component = lazy(() => import(`@/${path}/index.tsx`))
+  const fullScreen = fullScreenPaths.includes(path)
 
   return (
-    <Suspense fallback={<h1>loading...</h1>}>
+    <Suspense fallback={<Loading fullScreen={fullScreen} />}>
       <Component />
     </Suspense>
   )

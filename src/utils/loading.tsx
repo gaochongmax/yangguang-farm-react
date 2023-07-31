@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client'
-import { Spin } from 'antd'
+import Loading from '@/components/loading'
 
 const maskStyle = {
   background: 'rgba(0,0,0,.2)',
@@ -22,11 +22,7 @@ export const $showLoading = (tip: string) => {
   Object.assign(el.style, maskStyle)
   document.body.appendChild(el)
   root = ReactDOM.createRoot(el)
-  root.render(
-    <Spin tip={tip} size="large">
-      <div style={{width: '100vw', height: '100vh'}}></div>
-    </Spin>
-  )
+  root.render(<Loading fullScreen tip={tip} />)
 }
 
 export const $hideLoading = () => {

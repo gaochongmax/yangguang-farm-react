@@ -4,12 +4,9 @@ import { Provider } from 'react-redux'
 import { store } from '@/store'
 import { setAuthByRequest } from '@/store/reducers/auth-slice'
 import { setUserByRequest } from '@/store/reducers/user-slice'
+import Loading from './components/loading'
 import RouterGuard from '@/router/guard'
 import '@/index.scss'
-
-const Loading = () => (
-  <h1>加载中...</h1>
-)
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true)
@@ -30,7 +27,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {loading ? <Loading /> : (
+      {loading ? <Loading fullScreen /> : (
         // <React.StrictMode>
           <Provider store={store}>
             <RouterGuard />
