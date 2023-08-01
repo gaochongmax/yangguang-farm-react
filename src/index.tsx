@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/store'
 import { setAuthByRequest } from '@/store/reducers/auth-slice'
 import { setUserByRequest } from '@/store/reducers/user-slice'
-import Loading from './components/loading'
+import Loading from '@/components/loading'
 import RouterGuard from '@/router/guard'
 import '@/index.scss'
 

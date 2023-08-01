@@ -1,0 +1,27 @@
+@import 'variable.scss';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin g-page-padding {
+  padding: $inset-padding;
+}
+
+.g-page {
+  @include g-page-padding;
+}
+
+@mixin f-a-c {
+  display: flex;
+  align-items: center;
+}
+
+@mixin f-a-c-j-b {
+  @include f-a-c;
+  justify-content: space-between;
+}

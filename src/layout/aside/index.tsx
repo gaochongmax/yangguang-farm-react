@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   HomeOutlined,
   AppstoreOutlined,
@@ -47,27 +47,38 @@ const items: MenuItem[] = [
   ]),
 ]
 
+const slicePath = (path: string): string => {
+  const index = path.lastIndexOf('/')
+  return path.slice(index)
+}
+
 const Aside: React.FC = (props) => {
   const navigate = useNavigate()
+  const loaction = useLocation()
   const [collapsed, setCollapsed] = useState(false)
+  const [currentKey, setCurrentKey] = useState([slicePath(loaction.pathname)])
 
   const onClick: MenuProps['onClick'] = (item) => {
     const path = item.keyPath.reverse().join('')
-    console.log(path)
     navigate(path)
   }
+
+  useEffect(() => {
+    setCurrentKey([slicePath(loaction.pathname)])
+  }, [loaction])
 
   return (
     <div className={'aside' + (collapsed ? ' collapsed' : '')}>
       <div className="aside-top">
         <i className="iconfont icon-sun"></i>
-        <span className="brand">阳光农场</span>
+        <span className="brand">阳 光 农 场</span>
       </div>
       <div className="aside-middle">
         <Menu
           mode="inline"
           theme="dark"
           inlineCollapsed={collapsed}
+          defaultSelectedKeys={currentKey}
           items={items}
           onClick={onClick}
         />

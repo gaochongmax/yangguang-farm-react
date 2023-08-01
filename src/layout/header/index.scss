@@ -1,4 +1,4 @@
-.header {
+.layout-header {
   height: 100%;
   display: flex;
   align-items: center;
@@ -10,5 +10,8 @@
   }
   .name {
     margin: 0 20px 0 10px;
+  }
+  .icon-exchange {
+    margin-right: 20px;
   }
 }

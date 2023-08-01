@@ -1,3 +1,5 @@
+import type { ConstMap } from '@/types'
+
 export const REGEXP = {
   mobile: /^1\d{10}$/,
   password: /^[a-zA-Z]\w{5,7}$/,
@@ -18,5 +20,25 @@ export const UPLOAD_CONFIG = {
 export enum ROLES {
   none = 0,
   farmer,
-  retailer
+  seller
 }
+
+export const ROLES_ARR: ConstMap[] = [
+  {
+    code: ROLES.farmer,
+    text: '农场主'
+  },
+  {
+    code: ROLES.seller,
+    text: '商人'
+  }
+]
+
+const getTextByCode: (code: string | number, arr: ConstMap[]) => string | number | undefined = (code, arr) => {
+  const f = arr.find(v => v.code === code)
+  if (f) {
+    return f.text
+  }
+}
+
+export const getRoleByCode: (code: string | number) => string | number | undefined = code => getTextByCode(code, ROLES_ARR)

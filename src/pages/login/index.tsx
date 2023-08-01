@@ -1,48 +1,99 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Form, Input, Button } from 'antd'
-import { MobileOutlined, LockOutlined } from '@ant-design/icons'
-import { encrypt, REGEXP, http, ResException } from '@/utils'
+import Header from '@/components/header'
+import { encrypt, REGEXP, http, ResException, validate } from '@/utils'
+import { ValidateRules } from '@/types'
 import './index.scss'
+
+interface Rules {
+  mobile: ValidateRules,
+  password: ValidateRules,
+}
+
+const rules: Rules = {
+  mobile: {
+    requiredMsg: '请输入手机号',
+    regExpRule: {
+      pattern: REGEXP.mobile,
+      message: '手机号格式错误'
+    }
+  },
+  password: {
+    requiredMsg: '请输入密码',
+    regExpRule: {
+      pattern: REGEXP.password,
+      message: '以字母开头，可包含字母、数字、下划线，长度6-8位'
+    }
+  },
+}
+
+interface Form {
+  mobile: string,
+  password: string,
+  confirmPassword: string,
+}
+
+type K = keyof Form
+
+const initialValue = {
+  mobile: '',
+  password: '',
+  confirmPassword: ''
+}
 
 const Login: React.FC = () => {
   const location = useLocation()
   const redirect = location.state?.redirect
   const backUrl = redirect ? redirect.pathname + redirect.search : ''
   const [isRegister, setRegister] = useState(false)
-  const [form] = Form.useForm()
-  const rules = {
-    mobile: [
-      { required: true, message: '请输入手机号' },
-      { pattern: REGEXP.mobile, message: '手机号格式错误' }
-    ],
-    password: [
-      { required: true, message: '请输入密码' },
-      { pattern: REGEXP.password, message: '6-8位，以字母开头，可包含字母、数字、下划线' }
-    ],
-  }
+  const [isSubmited, setSubmited] = useState(false)
+  const [form, setForm] = useState(initialValue)
+  const [errors, setErrors] = useState(initialValue)
 
-  function onSwitch() {
+  const onSwitch = () => {
     setRegister(!isRegister)
+    setForm(initialValue)
+    setErrors(initialValue)
   }
 
-  async function onRegister() {
-    try {
-      const { mobile, password } = await form.validateFields()
-      await http<string>('/user/register', {
-        mobile,
-        password: encrypt(password)
-      }, '注册登录中...')
-      window.location.replace('/complete')
-    } catch (e) { }
+  const onInput = (e: React.ChangeEvent<HTMLInputElement>, field: K) => {
+    const { value } = e.target
+    setForm(v => Object.assign({}, v, { [field]: value }))
+    // 首次校验在提交时进行，后续输入时也校验，提升用户体验
+    if (isSubmited) {
+      validateField(field, value)
+    }
   }
 
-  async function onLogin() {
+  const validateField = async (field: K, value: string): Promise<boolean> => {
+    let message = ''
     try {
-      const { mobile, password } = await form.validateFields()
+      if (field === 'confirmPassword') {
+        message = value === form.password ? '' : '两次输入的密码不一致'
+      } else {
+        await validate(rules[field])(value)
+      }
+    } catch (e) {
+      message = (e as Error).message
+    } finally {
+      setErrors(v => Object.assign({}, v, { [field]: message }))
+    }
+    return !message
+  }
+
+  const validateAll = async (): Promise<boolean> => {
+    const entries = Object.entries(form).slice(0, isRegister ? undefined : -1)
+    const promises = entries.map(([k, v]) => validateField(k as K, v))
+    return (await Promise.all(promises)).every(v => v)
+  }
+
+  const onLogin = async () => {
+    try {
+      setSubmited(true)
+      if (!await validateAll()) return
       await http<boolean>('/user/login', {
-        mobile,
-        password: encrypt(password)
+        mobile: form.mobile,
+        password: encrypt(form.password)
       }, '登录中...')
       window.location.replace(backUrl)
     } catch (e: any) {
@@ -52,38 +103,53 @@ const Login: React.FC = () => {
     }
   }
 
+  const onRegister = async () => {
+    try {
+      setSubmited(true)
+      if (!await validateAll()) return
+      await http<string>('/user/register', {
+        mobile: form.mobile,
+        password: encrypt(form.password)
+      }, '注册登录中...')
+      window.location.replace('/complete')
+    } catch (e) { }
+  }
+
   return (
     <div className="login">
-      <div className="title">欢迎登录</div>
-      <div className="login-form-wrap">
-        <Form form={form}>
-          <Form.Item name="mobile" rules={rules.mobile}>
-            <Input placeholder="手机号" prefix={<MobileOutlined className="input-icon" />} />
-          </Form.Item>
-          <Form.Item name="password" rules={rules.password}>
-            <Input placeholder="密码" prefix={<LockOutlined className="input-icon" />} type="password" />
-          </Form.Item>
-          {isRegister &&
-            <Form.Item name="confirm_password" rules={[
-              { required: true, message: '请再次输入密码' },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
-                    return Promise.resolve()
-                  }
-                  return Promise.reject(new Error('两次输入的密码不一致'))
-                }
-              })
-            ]}>
-              <Input placeholder="再次输入密码" prefix={<LockOutlined className="input-icon" />} type="password" />
-            </Form.Item>
-          }
-        </Form>
-        <Button type="primary" style={{ width: '100%' }} onClick={isRegister ? onRegister : onLogin}>{isRegister ? '注册并登录' : '登 录'}</Button>
-        <div className="switch-mode">
-          <span>{isRegister ? '已' : '没'}有账号？</span>
-          <Button type="link" onClick={onSwitch}>{isRegister ? '登录' : '注册'}</Button>
+      <Header isLoginPage isRegister={isRegister} onSwitch={onSwitch} />
+      <div className="container">
+        <div className="form-item">
+          <input
+            className="form-item-input"
+            placeholder="手机号"
+            maxLength={11}
+            autoComplete="off"
+            value={form.mobile}
+            onChange={e => onInput(e, 'mobile')} />
+          <div className="form-item-error">{errors.mobile}</div>
         </div>
+        <div className="form-item">
+          <input
+            className="form-item-input"
+            type="password"
+            placeholder="密 码"
+            autoComplete="new-password"
+            value={form.password}
+            onChange={e => onInput(e, 'password')} />
+          <div className="form-item-error">{errors.password}</div>
+        </div>
+        {isRegister && <div className="form-item">
+          <input
+            className="form-item-input"
+            type="password"
+            placeholder="再次输入密码"
+            autoComplete="new-password"
+            value={form.confirmPassword}
+            onChange={e => onInput(e, 'confirmPassword')} />
+          <div className="form-item-error">{errors.confirmPassword}</div>
+        </div>}
+        <div className="login-button" onClick={isRegister ? onRegister : onLogin}>{isRegister ? '注册并登录' : '登 录'}</div>
       </div>
     </div>
   )

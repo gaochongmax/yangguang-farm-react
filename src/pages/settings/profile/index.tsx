@@ -2,7 +2,11 @@ import React from 'react'
 import ProfileForm from '@/components/profile-form'
 
 const Profile: React.FC = () => {
-  return <ProfileForm />
+  return (
+    <div className="g-page">
+      <ProfileForm />
+    </div>
+  )
 }
 
 export default Profile

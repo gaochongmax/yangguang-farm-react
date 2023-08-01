@@ -62,7 +62,9 @@ export function http<U> (
     }).catch(err => {
       reject(err)
     }).finally(() => {
-      $hideLoading()
+      if (tip) {
+        $hideLoading()
+      }
     })
   })
 }
