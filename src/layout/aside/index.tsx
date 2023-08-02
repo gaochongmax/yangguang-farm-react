@@ -11,6 +11,8 @@ import {
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
+import { useAppSelector } from '@/hooks'
+import { ROLES } from '@/utils'
 import './index.scss'
 
 type MenuItem = Required<MenuProps>['items'][number]
@@ -31,21 +33,10 @@ function getItem(
   } as MenuItem
 }
 
-const items: MenuItem[] = [
-  getItem('首页', '/home', <HomeOutlined />),
-  getItem('农场管理', '/farm-manage', <AppstoreOutlined />),
-  getItem('店铺管理', '/store-manage', <AppstoreOutlined />),
-  getItem('消息', '/im', <MessageOutlined />),
-  getItem('市场', '/market', <ShoppingOutlined />, [
-    getItem('商城', '/mall'),
-    getItem('交易记录', '/record'),
-    getItem('求购 / 转让信息', '/exchange'),
-  ]),
-  getItem('设置', '/settings', <SettingOutlined />, [
-    getItem('个人信息', '/profile'),
-    getItem('收货地址', '/address'),
-  ]),
-]
+const roleMenuItem: Record<Omit<ROLES, ROLES.none> & number, MenuItem> = {
+  [ROLES.farmer as number]: getItem('农场管理', '/farm-manage', <AppstoreOutlined />),
+  [ROLES.seller as number]: getItem('店铺管理', '/store-manage', <AppstoreOutlined />),
+}
 
 const slicePath = (path: string): string => {
   const index = path.lastIndexOf('/')
@@ -55,8 +46,23 @@ const slicePath = (path: string): string => {
 const Aside: React.FC = (props) => {
   const navigate = useNavigate()
   const loaction = useLocation()
+  const user = useAppSelector(state => state.user)
   const [collapsed, setCollapsed] = useState(false)
   const [currentKey, setCurrentKey] = useState([slicePath(loaction.pathname)])
+  const items: MenuItem[] = [
+    getItem('首页', '/home', <HomeOutlined />),
+    roleMenuItem[user.role],
+    getItem('消息', '/im', <MessageOutlined />),
+    getItem('市场', '/market', <ShoppingOutlined />, [
+      getItem('商城', '/mall'),
+      getItem('交易记录', '/record'),
+      getItem('求购 / 转让信息', '/exchange'),
+    ]),
+    getItem('设置', '/settings', <SettingOutlined />, [
+      getItem('个人信息', '/profile'),
+      getItem('收货地址', '/address'),
+    ]),
+  ]
 
   const onClick: MenuProps['onClick'] = (item) => {
     const path = item.keyPath.reverse().join('')
