@@ -3,7 +3,7 @@ import './index.scss'
 
 const Home: React.FC = () => {
   return (
-    <div className="home">home</div>
+    <div className="g-page home">home</div>
   )
 }
 

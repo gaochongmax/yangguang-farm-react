@@ -6,11 +6,11 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: $common-header-height;
 
   .container {
     @include f-a-c-j-b;
-    width: 1200px;
+    width: $container-width;
     height: 100%;
     margin: 0 auto;
     line-height: 1;
