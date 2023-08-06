@@ -35,7 +35,7 @@ const Header: React.FC<CompProps> = ({ isLoginPage, isRegister, onSwitch }) => {
         <div className={styles.zone}>
           <div className={styles['zone-item']}>关于我们</div>
           {isLoginPage && <div className={styles['zone-item']} onClick={onSwitch}>{isRegister ? '登录' : '注册'}</div>}
-          {!isLoginPage && <Tooltip placement="bottom" title="退出登录">
+          {!isLoginPage && <Tooltip placement='bottom' title='退出登录'>
             <LogoutOutlined onClick={onLogout} />
           </Tooltip>}
         </div>

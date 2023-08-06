@@ -55,14 +55,6 @@ const ProfileForm: React.FC<compProps> = ({ inGuide }) => {
     onChange
   }
 
-  // const onDelete = async () => {
-  //   try {
-  //     await http('/files/delete', {
-  //       file_id: '64bd2a482bde0e56f19d7a5e'
-  //     })
-  //   } catch (e) {}
-  // }
-
   const onSave = async () => {
     try {
       const values = await form.validateFields()
@@ -96,7 +88,7 @@ const ProfileForm: React.FC<compProps> = ({ inGuide }) => {
       colon={false}
       initialValues={user}
       form={form}>
-      {inGuide && <Form.Item label="身份" name="role" rules={[
+      {inGuide && <Form.Item label='身份' name='role' rules={[
         () => ({
           validator(_, value) {
             if (value === ROLES.none) {
@@ -107,30 +99,30 @@ const ProfileForm: React.FC<compProps> = ({ inGuide }) => {
         })
       ]}>
         <Radio.Group>
-          {ROLES_ARR.map(r => <Radio key={r.code} value={r.code}>{r.text}</Radio>)}
+          {ROLES_ARR.map(r => <Radio key={r.value} value={r.value}>{r.label}</Radio>)}
         </Radio.Group>
       </Form.Item>}
-      <Form.Item label="头像">
-        <ImgCrop modalOk="确定" modalCancel="取消">
+      <Form.Item label='头像'>
+        <ImgCrop modalOk='确定' modalCancel='取消'>
           <Upload {...uploadProps}>
             {avatarUrl ?
-              <img src={avatarUrl} alt="头像" style={{ width: '100%', borderRadius: '8px' }} /> :
+              <img src={avatarUrl} alt='头像' style={{ width: '100%', borderRadius: '8px' }} /> :
               uploadButton}
           </Upload>
         </ImgCrop>
       </Form.Item>
-      <Form.Item label="姓名" name="name" rules={rules.name}>
-        <Input placeholder="请输入姓名" maxLength={30} />
+      <Form.Item label='姓名' name='name' rules={rules.name}>
+        <Input placeholder='请输入姓名' maxLength={30} />
       </Form.Item>
-      <Form.Item label="手机号" name="mobile">
-        <Input disabled placeholder="请输入手机号" />
+      <Form.Item label='手机号' name='mobile'>
+        <Input disabled placeholder='请输入手机号' />
       </Form.Item>
-      <Form.Item label="微信号" name="wechat" rules={rules.wechat}>
-        <Input placeholder="请输入微信号" />
+      <Form.Item label='微信号' name='wechat' rules={rules.wechat}>
+        <Input placeholder='请输入微信号' />
       </Form.Item>
       <Form.Item labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
         <div style={{ textAlign: inGuide ? 'center' : 'right' }}>
-          <Button type="primary" onClick={onSave}>{inGuide ? '开始使用' : '保存'}</Button>
+          <Button type='primary' onClick={onSave}>{inGuide ? '开始使用' : '保存'}</Button>
         </div>
       </Form.Item>
     </Form >

@@ -9,6 +9,8 @@ declare namespace NodeJS {
   }
 }
 
+declare module 'spark-md5'
+
 declare module '*.avif' {
   const src: string;
   export default src;

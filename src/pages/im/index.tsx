@@ -3,7 +3,7 @@ import './index.scss'
 
 const IM: React.FC = () => {
   return (
-    <div className="im">im</div>
+    <div className='im'>im</div>
   )
 }
 

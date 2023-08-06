@@ -5,15 +5,15 @@ import Header from './header'
 import './index.scss'
 
 const Layout: React.FC = () => (
-  <div className="layout">
-    <div className="layout-aside">
+  <div className='layout'>
+    <div className='layout-aside'>
       <Aside />
     </div>
-    <div className="layout-main">
-      <div className="layout-main-header">
+    <div className='layout-main'>
+      <div className='layout-main-header'>
         <Header />
       </div>
-      <div className="layout-main-body">
+      <div className='layout-main-body'>
         <Outlet />
       </div>
     </div>

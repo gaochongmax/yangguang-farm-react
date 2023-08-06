@@ -3,7 +3,7 @@ import './index.scss'
 
 const Exchange: React.FC = () => {
   return (
-    <div className="exchange">exchange</div>
+    <div className='exchange'>exchange</div>
   )
 }
 

@@ -75,21 +75,21 @@ const Aside: React.FC = (props) => {
 
   return (
     <div className={'aside' + (collapsed ? ' collapsed' : '')}>
-      <div className="aside-top">
-        <i className="iconfont icon-sun"></i>
-        <span className="brand">阳 光 农 场</span>
+      <div className='aside-top'>
+        <i className='iconfont icon-sun'></i>
+        <span className='brand'>阳 光 农 场</span>
       </div>
-      <div className="aside-middle">
+      <div className='aside-middle'>
         <Menu
-          mode="inline"
-          theme="dark"
+          mode='inline'
+          theme='dark'
           inlineCollapsed={collapsed}
           defaultSelectedKeys={currentKey}
           items={items}
           onClick={onClick}
         />
       </div>
-      <div className="aside-bottom" onClick={() => setCollapsed(!collapsed)}>
+      <div className='aside-bottom' onClick={() => setCollapsed(!collapsed)}>
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </div>
     </div>

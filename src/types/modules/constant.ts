@@ -1,4 +1,5 @@
-export interface ConstMap {
-  code: string | number,
-  text: string | number
+export interface CommonOption {
+  value: string | number
+  label: string
+  children?: CommonOption[]
 }

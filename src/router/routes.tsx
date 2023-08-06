@@ -56,6 +56,13 @@ export const routes: AppRouteObject[] = [
         }
       },
       {
+        path: 'farm-edit',
+        element: lazyLoad('pages/farm-edit'),
+        meta: {
+          role: 1
+        }
+      },
+      {
         path: 'store-manage',
         element: lazyLoad('pages/store-manage'),
         meta: {
@@ -111,6 +118,10 @@ export const routes: AppRouteObject[] = [
     meta: {
       auth: true,
     },
+  },
+  {
+    path: '/demo',
+    element: lazyLoad('pages/demo'),
   },
   {
     path: '*',

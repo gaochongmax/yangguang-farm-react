@@ -116,40 +116,40 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="login">
+    <div className='login'>
       <Header isLoginPage isRegister={isRegister} onSwitch={onSwitch} />
-      <div className="container">
-        <div className="form-item">
+      <div className='container'>
+        <div className='form-item'>
           <input
-            className="form-item-input"
-            placeholder="手机号"
+            className='form-item-input'
+            placeholder='手机号'
             maxLength={11}
-            autoComplete="off"
+            autoComplete='off'
             value={form.mobile}
             onChange={e => onInput(e, 'mobile')} />
-          <div className="form-item-error">{errors.mobile}</div>
+          <div className='form-item-error'>{errors.mobile}</div>
         </div>
-        <div className="form-item">
+        <div className='form-item'>
           <input
-            className="form-item-input"
-            type="password"
-            placeholder="密 码"
-            autoComplete="new-password"
+            className='form-item-input'
+            type='password'
+            placeholder='密 码'
+            autoComplete='new-password'
             value={form.password}
             onChange={e => onInput(e, 'password')} />
-          <div className="form-item-error">{errors.password}</div>
+          <div className='form-item-error'>{errors.password}</div>
         </div>
-        {isRegister && <div className="form-item">
+        {isRegister && <div className='form-item'>
           <input
-            className="form-item-input"
-            type="password"
-            placeholder="再次输入密码"
-            autoComplete="new-password"
+            className='form-item-input'
+            type='password'
+            placeholder='再次输入密码'
+            autoComplete='new-password'
             value={form.confirmPassword}
             onChange={e => onInput(e, 'confirmPassword')} />
-          <div className="form-item-error">{errors.confirmPassword}</div>
+          <div className='form-item-error'>{errors.confirmPassword}</div>
         </div>}
-        <div className="login-button" onClick={isRegister ? onRegister : onLogin}>{isRegister ? '注册并登录' : '登 录'}</div>
+        <div className='login-button' onClick={isRegister ? onRegister : onLogin}>{isRegister ? '注册并登录' : '登 录'}</div>
       </div>
     </div>
   )

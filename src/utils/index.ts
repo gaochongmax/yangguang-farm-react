@@ -1,4 +1,6 @@
+import SparkMD5 from 'spark-md5'
 import type { ValidateRules } from '@/types'
+import { CHUNK_SIZE } from './constant'
 export * from './constant'
 export * from './http'
 export * from './loading'
@@ -34,4 +36,33 @@ export function validate(roles: ValidateRules): ((value: string | undefined) => 
       resolve(true)
     })
   }
+}
+
+/**
+ * 生成文件hash
+ * @param file 文件
+ * @returns Promise<string>
+ */
+export const genFileHash: (file: File) => Promise<string> = (file) => {
+  return new Promise((resolve, reject) => {
+    let start = 0
+    const fileReader = new FileReader()
+    const spark = new SparkMD5.ArrayBuffer()
+    const load = () => {
+      fileReader.readAsArrayBuffer(file.slice(start, start += CHUNK_SIZE))
+    }
+    fileReader.onload = (e) => {
+      spark.append(e.target?.result)
+      if (start < file.size) {
+        load()
+      } else {
+        const hash = spark.end()
+        resolve(hash)
+      }
+    }
+    fileReader.onerror = err => {
+      reject(err)
+    }
+    load()
+  })
 }

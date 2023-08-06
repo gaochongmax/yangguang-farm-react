@@ -3,7 +3,7 @@ import './index.scss'
 
 const StoreManage: React.FC = () => {
   return (
-    <div className="store-manage">store-manage</div>
+    <div className='store-manage'>store-manage</div>
   )
 }
 

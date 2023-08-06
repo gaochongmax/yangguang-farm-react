@@ -17,6 +17,11 @@ body {
   @include g-page-padding;
 }
 
+.g-page-content {
+  @include g-page-padding;
+  background-color: #fff;
+}
+
 @mixin f-a-c {
   display: flex;
   align-items: center;

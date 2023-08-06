@@ -3,8 +3,10 @@ import ProfileForm from '@/components/profile-form'
 
 const Profile: React.FC = () => {
   return (
-    <div className="g-page">
-      <ProfileForm />
+    <div className='g-page'>
+      <div className='g-page-content'>
+        <ProfileForm />
+      </div>
     </div>
   )
 }

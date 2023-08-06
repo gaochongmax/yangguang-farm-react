@@ -1,0 +1,26 @@
+@import '@/styles/variable.scss';
+
+.farm-card {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: aquamarine;
+  position: relative;
+  &-row {
+    padding-bottom: 10px;
+    &.name-row {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+  .picture {
+    width: 100px;
+    height: 100px;
+  }
+  .edit {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: $gray-2;
+    cursor: pointer;
+  }
+}

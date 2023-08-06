@@ -1,7 +1,7 @@
 import { Tooltip, Modal } from 'antd'
 import { LogoutOutlined } from '@ant-design/icons'
 import { useAppSelector } from '@/hooks'
-import { http, ROLES, getRoleByCode } from '@/utils'
+import { http, ROLES, getRoleLabel } from '@/utils'
 import './index.scss'
 
 const Header: React.FC = () => {
@@ -17,10 +17,10 @@ const Header: React.FC = () => {
     })
   }
   const onSwitchRole = () => {
-    const currentRole = getRoleByCode(user.role)
-    const swtchRoleCode = user.role === ROLES.farmer ? ROLES.seller : ROLES.farmer
-    const swtchRoleText = getRoleByCode(swtchRoleCode)
-    const content = `您当前身份是${currentRole}，确定要切换为${swtchRoleText}？`
+    const currentRole = getRoleLabel(user.role)
+    const swtchRoleValue = user.role === ROLES.farmer ? ROLES.seller : ROLES.farmer
+    const swtchRoleLabel = getRoleLabel(swtchRoleValue)
+    const content = `您当前身份是${currentRole}，确定要切换为${swtchRoleLabel}？`
     const onOk = async () => {
       try {
         await http<null>('/user/switch-role')
@@ -39,13 +39,13 @@ const Header: React.FC = () => {
     confirm('确定要退出登录吗？', onOk)
   }
   return (
-    <div className="layout-header">
-      <img className="avatar" src={user.avatar_url} alt="头像" />
-      <span className="name">{user.name}</span>
-      <Tooltip placement="bottom" title="切换身份">
-        <i className="iconfont icon-exchange" onClick={onSwitchRole} />
+    <div className='layout-header'>
+      <img className='avatar' src={user.avatar_url} alt='头像' />
+      <span className='name'>{user.name}</span>
+      <Tooltip placement='bottom' title='切换身份'>
+        <i className='iconfont icon-exchange' onClick={onSwitchRole} />
       </Tooltip>
-      <Tooltip placement="bottom" title="退出登录">
+      <Tooltip placement='bottom' title='退出登录'>
         <LogoutOutlined onClick={onLogout} />
       </Tooltip>
     </div>

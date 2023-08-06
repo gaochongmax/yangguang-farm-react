@@ -21,7 +21,7 @@ export class ErrorBoundary extends React.Component<CompProps> {
   render() {
     if (this.state.err) {
       // 你可以自定义降级后的 UI 并渲染
-      return <div className="error">Something went wrong.</div>
+      return <div className='error'>Something went wrong.</div>
     }
     return this.props.children
   }

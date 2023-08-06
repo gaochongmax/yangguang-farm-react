@@ -3,7 +3,7 @@ import './index.scss'
 
 const Record: React.FC = () => {
   return (
-    <div className="record">record</div>
+    <div className='record'>record</div>
   )
 }
 
